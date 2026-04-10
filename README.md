@@ -52,6 +52,22 @@ docker run -it <...> jonasal/devpi-server:latest \
     --debug
 ```
 
+### Portainer Stack
+
+The repository root now includes a `docker-compose.yml` file that can be used
+directly as a Portainer stack.
+
+1. In Portainer, create a new stack from this repository.
+2. Set the `DEVPI_PASSWORD` environment variable before deploying.
+3. Optionally set `DEVPI_PORT` if you do not want to publish the service on
+   port `3141`.
+
+By default the stack:
+
+- builds the image from `./server`
+- publishes port `3141`
+- stores persistent data in the named volume `devpi-server-data`
+
 
 ## Client
 

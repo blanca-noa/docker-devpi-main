@@ -1,0 +1,17 @@
+services:
+  devpi-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: docker-devpi-server:local
+    container_name: devpi-server
+    restart: unless-stopped
+    ports:
+      - "${DEVPI_PORT:-3141}:3141"
+    environment:
+      DEVPI_PASSWORD: ${DEVPI_PASSWORD:?Set DEVPI_PASSWORD before deploying the stack}
+    volumes:
+      - devpi-server-data:/devpi/server
+
+volumes:
+  devpi-server-data:
