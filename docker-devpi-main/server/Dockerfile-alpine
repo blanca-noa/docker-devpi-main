@@ -1,0 +1,30 @@
+FROM python:3.14.3-alpine
+
+ENV DEVPISERVER_SERVERDIR=/devpi/server
+RUN mkdir -p $DEVPISERVER_SERVERDIR && \
+    mkdir /entrypoint.d
+
+COPY requirements.txt /requirements.txt
+RUN apk add --no-cache \
+        gcc \
+        musl-dev \
+        libffi \
+        libffi-dev \
+        cargo \
+        libgcc \
+    && \
+    pip install --no-cache-dir -r /requirements.txt \
+    && \
+    apk del \
+        gcc \
+        musl-dev \
+        libffi-dev \
+        cargo \
+    && \
+    rm -rf /root/.cache
+
+COPY entrypoint.sh /
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "" ]
+
+EXPOSE 3141
